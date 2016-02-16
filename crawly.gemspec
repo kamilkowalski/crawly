@@ -11,6 +11,8 @@ Gem::Specification.new do |s|
   s.files       = `git ls-files`.split("\n")
   s.test_files  = `git ls-files`.split("\n")
 
+  s.add_development_dependency "rake",  "~> 10.0"
+
   s.add_runtime_dependency "nokogiri",  "~> 1.6.7"
   s.add_runtime_dependency "pg",        "~> 0.18"
 end
