@@ -1,0 +1,23 @@
+PATH
+  remote: .
+  specs:
+    crawly (1.0.0)
+      nokogiri (~> 1.6.7)
+      pg (~> 0.18)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    mini_portile2 (2.0.0)
+    nokogiri (1.6.7.2)
+      mini_portile2 (~> 2.0.0.rc2)
+    pg (0.18.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  crawly!
+
+BUNDLED WITH
+   1.11.2
