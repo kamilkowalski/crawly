@@ -9,6 +9,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     mini_portile2 (2.0.0)
+    minitest (5.8.4)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     pg (0.18.4)
@@ -19,6 +20,7 @@ PLATFORMS
 
 DEPENDENCIES
   crawly!
+  minitest (~> 5.8)
   rake (~> 10.0)
 
 BUNDLED WITH
