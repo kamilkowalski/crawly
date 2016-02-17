@@ -1,5 +1,4 @@
-require "minitest/autorun"
-require "crawly"
+require_relative "helper"
 
 class BaseTest < Minitest::Test
   def test_greet
