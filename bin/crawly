@@ -2,4 +2,19 @@
 
 require "crawly"
 
-puts Crawly::Base.new.greet
+if ARGV.length < 1
+  puts "Usage: crawly CRAWLSPEC"
+  exit 1
+end
+
+crawlspec = ARGV[0]
+
+unless File.exist?(crawlspec)
+  puts "File does not exist: #{crawlspec}"
+  exit 2
+end
+
+crawlspec_path = File.absolute_path(crawlspec)
+bundle = Crawly::Bundle.new(crawlspec_path)
+cluster = Crawly::Cluster.new(bundle)
+cluster.start
