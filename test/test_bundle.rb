@@ -99,14 +99,14 @@ class BundleTest < Minitest::Test
     if ENV["TRAVISCI"].nil?
       assert_equal({
         host: "localhost",
-        dbname: "crawly-test",
+        dbname: "crawly",
         user: "crawly",
         password: "crawly"
       }, @bundle[:dbconfig])
     else
       assert_equal({
         host: "localhost",
-        dbname: "crawly-test",
+        dbname: "crawly",
         user: "postgres"
       }, @bundle[:dbconfig])
     end

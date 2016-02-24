@@ -1,14 +1,14 @@
 if ENV["TRAVISCI"].nil?
   dbconfig({
     host: "localhost",
-    dbname: "crawly-test",
+    dbname: "crawly",
     user: "crawly",
     password: "crawly"
   })
 else
   dbconfig({
     host: "localhost",
-    dbname: "crawly-test",
+    dbname: "crawly",
     user: "postgres"
   })
 end
