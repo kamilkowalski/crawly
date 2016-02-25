@@ -24,7 +24,7 @@ module Crawly
         CREATE TABLE crawldocs
         (id SERIAL, link VARCHAR(255), processed BOOLEAN, content TEXT)
       SQL
-    rescue PG::DuplicateTable
+    rescue StandardError
     end
 
     def truncate_table
