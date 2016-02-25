@@ -33,6 +33,8 @@ module Crawly
       Process.waitall
     end
 
+    private
+
     def stop_workers
       @log.info "Stopping workers"
       @workers.each do |pid|
@@ -47,8 +49,6 @@ module Crawly
 
       @workers = []
     end
-
-    private
 
     def spawn_worker(master)
       Worker.new(master, bundle: @bundle, log: @log).work

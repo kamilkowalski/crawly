@@ -1,2 +1,5 @@
 .ruby-gemset
 .ruby-version
+.byebug_history
+
+test/pids/
