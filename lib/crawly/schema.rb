@@ -21,7 +21,7 @@ module Crawly
 
     def create_table
       @db.exec <<-SQL
-        CREATE TABLE documents
+        CREATE TABLE crawldocs
         (id SERIAL, link VARCHAR(255), processed BOOLEAN, content TEXT)
       SQL
     rescue PG::DuplicateTable
@@ -29,7 +29,7 @@ module Crawly
 
     def truncate_table
       @db.exec <<-SQL
-        TRUNCATE TABLE documents
+        TRUNCATE TABLE crawldocs
       SQL
     end
 
@@ -39,7 +39,7 @@ module Crawly
       else
         @db.prepare(
           "document_seed",
-          "INSERT INTO documents (link, processed, content) VALUES ($1, 'f', '')"
+          "INSERT INTO crawldocs (link, processed, content) VALUES ($1, 'f', '')"
         )
 
         @db.exec_prepared("document_seed", [@bundle[:entry_point]])

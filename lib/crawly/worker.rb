@@ -49,27 +49,27 @@ module Crawly
     def prepare_queries
       @db.prepare(
         "document_find",
-        "SELECT COUNT(*) FROM documents WHERE link = $1"
+        "SELECT COUNT(*) FROM crawldocs WHERE link = $1"
       )
 
       @db.prepare(
         "document_select",
-        "SELECT link FROM documents WHERE processed = 'f' LIMIT 1"
+        "SELECT link FROM crawldocs WHERE processed = 'f' LIMIT 1"
       )
 
       @db.prepare(
         "document_insert",
-        "INSERT INTO documents (link, processed, content) VALUES ($1, 'f', '')"
+        "INSERT INTO crawldocs (link, processed, content) VALUES ($1, 'f', '')"
       )
 
       @db.prepare(
         "document_lock",
-        "UPDATE documents SET processed = 't' WHERE link=$1"
+        "UPDATE crawldocs SET processed = 't' WHERE link=$1"
       )
 
       @db.prepare(
         "document_update",
-        "UPDATE documents SET processed = 't', content=$1 WHERE link=$2"
+        "UPDATE crawldocs SET processed = 't', content=$1 WHERE link=$2"
       )
     end
 
