@@ -24,20 +24,22 @@ module Crawly
       @entry_point = entry_point
     end
 
-    def append_filter(filter)
-      unless filter.is_a?(Proc)
-        raise ConfigError.new("Filter must be a proc")
-      end
-
-      if filter.arity != 1
-        raise ConfigError.new("Filter arity must be /1")
-      end
-
-      @filters << filter
+    def append_content_filter(filter)
+      check_filter!(filter)
+      @content_filters << filter
     end
 
-    def clear_filters!
-      @filters.clear
+    def clear_content_filters!
+      @content_filters.clear
+    end
+
+    def append_link_filter(filter)
+      check_filter!(filter)
+      @link_filters << filter
+    end
+
+    def clear_link_filters!
+      @link_filters.clear
     end
 
     def cluster_size(size)
@@ -70,18 +72,29 @@ module Crawly
     private
 
     def set_defaults
-      @dbconfig     = nil
-      @entry_point  = nil
-      @continue     = false
-      @cluster_size = 5
-      @log_level    = :info
-      @filters      = []
+      @dbconfig         = nil
+      @entry_point      = nil
+      @continue         = false
+      @cluster_size     = 5
+      @log_level        = :info
+      @content_filters  = []
+      @link_filters     = []
     end
 
     def load_crawlspec
       unless @crawlspec.nil?
         contents = File.read(@crawlspec)
         eval(contents, binding, __FILE__, __LINE__)
+      end
+    end
+
+    def check_filter!(filter)
+      unless filter.is_a?(Proc)
+        raise ConfigError.new("Filter must be a proc")
+      end
+
+      if filter.arity != 1
+        raise ConfigError.new("Filter arity must be /1")
       end
     end
   end

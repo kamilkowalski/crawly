@@ -14,7 +14,8 @@ else
 end
 
 entry_point "http://www.cnn.com"
-append_filter -> (a) { a }
+append_content_filter -> (a) { a }
+append_link_filter -> (a) { a }
 continue true
 cluster_size 25
 log_level "warn"

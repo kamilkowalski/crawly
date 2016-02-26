@@ -74,7 +74,7 @@ module Crawly
     end
 
     def process_document(url, content)
-      @bundle[:filters].each do |filter|
+      @bundle[:content_filters].each do |filter|
         content = filter.call(content)
         break if content.nil?
       end
@@ -83,10 +83,12 @@ module Crawly
     end
 
     def extract_links(document)
-      links = document.xpath("//a[@href]").map do |n|
-        n.attribute("href").content
-      end.select do |l|
-        /https?\:\/\/[^\/]*onet/ =~ l
+      links = document.xpath("//a[@href]").map do |node|
+        node.attribute("href").content
+      end.select do |link|
+        @bundle[:link_filters].any? do |filter|
+          filter.call(link)
+        end
       end
 
       links.each do |l|

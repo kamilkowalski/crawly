@@ -11,7 +11,8 @@ class BundleTest < Minitest::Test
     assert_equal false, @bundle[:continue]
     assert_equal 5, @bundle[:cluster_size]
     assert_equal :info, @bundle[:log_level]
-    assert_empty @bundle[:filters]
+    assert_empty @bundle[:content_filters]
+    assert_empty @bundle[:link_filters]
   end
 
   def test_getter
@@ -34,27 +35,50 @@ class BundleTest < Minitest::Test
     assert_equal "http://www.google.com", @bundle[:entry_point]
   end
 
-  def test_append_filter
+  def test_append_content_filter
     # Incorrect type of filter
     assert_raises Crawly::ConfigError do
-      @bundle.append_filter 5
+      @bundle.append_content_filter 5
     end
 
     # Incorrect arity of filter
     assert_raises Crawly::ConfigError do
-      @bundle.append_filter -> (a, b) { [a, b] }
+      @bundle.append_content_filter -> (a, b) { [a, b] }
     end
 
     filter = -> (a) { a }
-    @bundle.append_filter filter
-    assert_equal filter, @bundle[:filters].first
-    assert_equal 1, @bundle[:filters].size
+    @bundle.append_content_filter filter
+    assert_equal filter, @bundle[:content_filters].first
+    assert_equal 1, @bundle[:content_filters].size
   end
 
-  def test_clear_filters!
-    @bundle.append_filter -> (a) { a }
-    @bundle.clear_filters!
-    assert_empty @bundle[:filters]
+  def test_clear_content_filters!
+    @bundle.append_content_filter -> (a) { a }
+    @bundle.clear_content_filters!
+    assert_empty @bundle[:content_filters]
+  end
+
+  def test_append_link_filter
+    # Incorrect type of filter
+    assert_raises Crawly::ConfigError do
+      @bundle.append_link_filter 5
+    end
+
+    # Incorrect arity of filter
+    assert_raises Crawly::ConfigError do
+      @bundle.append_link_filter -> (a, b) { [a, b] }
+    end
+
+    filter = -> (a) { a }
+    @bundle.append_link_filter filter
+    assert_equal filter, @bundle[:link_filters].first
+    assert_equal 1, @bundle[:link_filters].size
+  end
+
+  def test_clear_link_filters!
+    @bundle.append_link_filter -> (a) { a }
+    @bundle.clear_link_filters!
+    assert_empty @bundle[:link_filters]
   end
 
   def test_cluster_size
@@ -112,7 +136,8 @@ class BundleTest < Minitest::Test
     end
 
     assert_equal "http://www.cnn.com", @bundle[:entry_point]
-    assert_equal 1, @bundle[:filters].size
+    assert_equal 1, @bundle[:content_filters].size
+    assert_equal 1, @bundle[:link_filters].size
     assert_equal true, @bundle[:continue]
     assert_equal 25, @bundle[:cluster_size]
     assert_equal :warn, @bundle[:log_level]
